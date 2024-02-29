@@ -193,10 +193,9 @@ if __name__ == "__main__":
 
     with trans_1:
         st.text('What is the transaction you are performing?')
-        
-        selection = st.selectbox('Transactions:',options=['Payments_Applications','Upload_File'],index=[None],placeholder='Select an Option')
+        selection = st.selectbox('Transactions:',options=['None','Payments_Applications','Upload_File'],placeholder='Select an Option')
 
-    if selection == None:
+    if selection == 'None':
       st.write('Please select an option')
         
     elif selection == 'Payments_Applications':
