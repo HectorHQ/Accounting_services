@@ -160,10 +160,8 @@ def application_of_payments(df_invs,headers):
     return df_items_processed
 
 
-
-
-
-with st.form(key='log_in',):
+if __name__ == "__main__":
+    with st.form(key='log_in',):
         
         email = st.text_input('email:'),
         password_st = st.text_input('Password:',type='password')
@@ -189,22 +187,19 @@ with st.form(key='log_in',):
 
                 st.session_state['retailers_list'] = data_retailer_list
         except:
-            st.write('Credentials are incorrect, Please try again')        
-
-
-
-
-if __name__ == "__main__":
-    
+            st.write('Credentials are incorrect, Please try again')  
+          
     trans_1,trans_2 = st.columns(2)
 
     with trans_1:
         st.text('What is the transaction you are performing?')
+        
         selection = st.selectbox('Transactions:',options=['Payments_Applications','Upload_File'],index=None,placeholder='Select an Option')
 
-    
+    if selection == None:
+      st.write('Please select an option')
         
-    if selection == 'Payments_Applications':
+    elif selection == 'Payments_Applications':
         st.text('Generate Data Frame to work with by Selecting the Date Ranges you want to process')
         df = filter_dataframe(st.session_state['logs_concatenated_filter'],'Logs')
 
