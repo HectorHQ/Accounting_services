@@ -200,9 +200,11 @@ if __name__ == "__main__":
 
     with trans_1:
         st.text('What is the transaction you are performing?')
-        selection = st.selectbox('Transactions:',options=['Payments_Applications','Upload_File'],placeholder='Select an Option')
+        selection = st.selectbox('Transactions:',options=['Payments_Applications',index=None,'Upload_File'],placeholder='Select an Option')
 
-    if selection == 'Payments_Applications':
+    if selection == None:
+      pass
+    elif selection == 'Payments_Applications':
         st.text('Generate Data Frame to work with by Selecting the Date Ranges you want to process')
         df = filter_dataframe(st.session_state['logs_concatenated_filter'],'Logs')
 
