@@ -139,6 +139,7 @@ def create_payment(list_pmts,headers):
             data_pmt_created = response.json()
 
             data = data_pmt_created['data']['postAccountingAPIRecordTransaction']
+            data
             continue    
 
         
