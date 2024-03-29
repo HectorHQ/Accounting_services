@@ -90,6 +90,7 @@ def create_payment(list_pmts,headers):
             transactionType = 'WRITE_OFF_EXTERNAL'     
         
         id_retailer = pmt['Retailer_ID']
+        interComp = pmt['Intercompany']
         payment_ref = pmt['Pmt_Ref']
         utc_str = 'T12:00:00.000Z'
         paidAt = pmt['Payment_Date'] + utc_str
@@ -129,6 +130,7 @@ def create_payment(list_pmts,headers):
                         'location': location,
                         'adminNotes': notes,
                         'publicNotes': '',
+                        'originCompany': interComp
                     },
                 },
                 'query': 'mutation postAccountingAPIRecordTransaction($input: PostAccountingAPIRecordTransactionInput!) {\n  postAccountingAPIRecordTransaction(input: $input) {\n    amount\n    id\n    name\n    number\n    __typename\n  }\n}\n',
