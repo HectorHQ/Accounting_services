@@ -316,6 +316,7 @@ if __name__ == "__main__":
             df_data_pmts = load_dataframe(file_uploaded)
             df_data_pmts['Payment_Date'] = df_data_pmts['Payment_Date'].astype(str)
             df_data_pmts['Pmt_Ref'] = df_data_pmts['Pmt_Ref'].astype(str)
+            df_data_pmts['Intercompany'] = df_data_pmts['Intercompany'].astype(str)
             df_data_pmts['pmt_Amount'] = pd.to_numeric(df_data_pmts['pmt_Amount']).round(2)
             df_data_pmts['Amt_to_apply'] = pd.to_numeric(df_data_pmts['Amt_to_apply']).round(2)
             transactions_types = ['Payment', 'Self_Collected', 'Write_Off_Nabis', 'Write_Off_External' , 'Bounced_Check']
