@@ -31,6 +31,14 @@ def load_dataframe(file):
 
 
 
+intercompany_map = {'1. Nabitwo Checking':'NABITWO',
+'4. Nabifive Checking':'NABIFIVE',
+'NabiTwo':'NABITWO',
+'NabiFive':'NABIFIVE',
+'North Hollywood':'NABIFIVE',
+'Oakland':'NABIFIVE',
+'Woodlake':'NABIFIVE',}
+
 st.cache_data()
 cashlog_complete,cashlog = df_cash()
 st.session_state['cashlog_complete'] = cashlog_complete
@@ -50,7 +58,9 @@ st.session_state['eftlog'] = eftlog
 
 st.cache_data()
 logs_concatenated_filter = logs_consolidated(cashlog,checklog,eftlog)
+logs_concatenated_filter['Intercompany'] = logs_concatenated_filter['Company'].map(intercompany_map)
 st.session_state['logs_concatenated_filter'] = logs_concatenated_filter
+
 
 st.cache_data()
 def payments_creation_as(list_payments,headers):
@@ -206,7 +216,7 @@ if __name__ == "__main__":
         headers = st.session_state['headers']
 
         payments = df.loc[df['Amount']!='-'].copy()
-        payments = payments[['Date','Payment Reference','Amount','Retailer','Nabis Status','Pmt_Method']]
+        payments = payments[['Date','Payment Reference','Amount','Retailer','Nabis Status','Pmt_Method','Intercompany']]
         payments.drop_duplicates(subset=['Payment Reference'],inplace=True)
         
         st.write(f'{payments.shape[0]} Payments to generate')
@@ -261,6 +271,7 @@ if __name__ == "__main__":
         payments['Retailer_name'] = payments['RetailerName']
         payments['Pmt_Ref'] = payments['Payment Reference'].astype(str)
         payments['pmt_Amount'] = pd.to_numeric(payments['Amount']).round(2)
+        payments['Intercompany'] = payments['Intercompany'].astype(str)
         
 
         invoices_df['Amt_to_apply'] = pd.to_numeric(invoices_df['Amount Applied']).round(2)
