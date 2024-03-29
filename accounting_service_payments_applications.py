@@ -324,8 +324,9 @@ st.cache()
 def df_cash():
     data_cash_log = read_gs_byID(st.secrets["gs_ID"]["cash_log_ID"],1792079758)
     cashlog_complete = pd.DataFrame(data_cash_log[0][1:],columns=data_cash_log[0][0])
-    cashlog = cashlog_complete[['Date','Payment Reference','Amount','Invoices','Invoice Amt', 'Brand', 'Retailer', 'Amount Applied','Nabis Status']].copy()
-
+    cashlog = cashlog_complete[['Date','Payment Reference','Amount','Invoices','Invoice Amt', 'Brand', 'Retailer', 'Amount Applied','Nabis Status','Location']].copy()
+    cashlog.rename(columns={'Location':'Company'},inplace=True)
+    
     return cashlog_complete,cashlog
 
 
@@ -334,7 +335,7 @@ def df_checks():
     data_check_log = read_gs_byID(st.secrets["gs_ID"]["check_log_ID"],813380796)
     checklog_complete = pd.DataFrame(data_check_log[0][1:],columns=data_check_log[0][0])
     checklog_complete = checklog_complete.loc[checklog_complete['Company']!='Siban'].copy()
-    checklog = checklog_complete[['Date','Payment Reference','Check Amount','Invoices','Invoice Amt', 'Brand', 'Retailer', 'Amount Applied','Nabis Status','QB Status']].copy()
+    checklog = checklog_complete[['Date','Payment Reference','Check Amount','Invoices','Invoice Amt', 'Brand', 'Retailer', 'Amount Applied','Nabis Status','QB Status','Company']].copy()
     checklog.rename(columns={'Check Amount':'Amount'},inplace=True)
     #checklog['Payment Reference'] = checklog['Payment Reference'].astype('str')
     #checklog['Payment Reference'] = checklog['Payment Reference'].str.replace('([^\s\d])','',regex=True)
@@ -349,8 +350,8 @@ def df_eft():
     data_eft_log = read_gs_byID(st.secrets["gs_ID"]["eft_log_ID"],2020060949)
     eftlog_complete = pd.DataFrame(data_eft_log[0][1:],columns=data_eft_log[0][0])
     colnames = ['Date','Payment Reference','Amount','Invoices','Invoice Amt', 'Brand', 'Retailer', 'Amount Applied','Nabis Status']
-    eftlog = eftlog_complete[['Date','Payment Reference','Transfer Amount','Invoices','Invoice Amt', 'Brand', 'Retailer', 'Amount Applied','Nabis Status']]
-    eftlog.rename(columns={'Transfer Amount':'Amount'},inplace=True)
+    eftlog = eftlog_complete[['Date','Payment Reference','Transfer Amount','Invoices','Invoice Amt', 'Brand', 'Retailer', 'Amount Applied','Nabis Status','Account']]
+    eftlog.rename(columns={'Transfer Amount':'Amount','Account':'Company'},inplace=True)
 
     return eftlog_complete,eftlog
 
