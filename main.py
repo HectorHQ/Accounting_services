@@ -226,7 +226,7 @@ if __name__ == "__main__":
         invoices_df['Invoices'] = invoices_df['Invoices'].astype('str')
         st.write(f'{invoices_df.shape[0]} Invoices to process')
 
-    
+        invoices_df
         if len(invoices_df['Invoices']) > 0:
             list_invoices = []
             for i in invoices_df['Invoices']:
