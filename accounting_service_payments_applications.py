@@ -107,6 +107,8 @@ def create_payment(list_pmts,headers):
                 location = None
             elif str.upper(pmt['Location']) == 'WL':
                 location = 'CASH_IN_WOODLAKE'
+            elif interComp == "None":
+                interComp = None
             else:
                 location = 'CASH_IN_' + str.upper(pmt['Location'])
         
@@ -140,7 +142,7 @@ def create_payment(list_pmts,headers):
             response = requests.post('https://api.nabis.com/graphql/admin', headers=headers, json=json_data)
 
             data_pmt_created = response.json()
-            
+            data_pmt_created
             data = data_pmt_created['data']['postAccountingAPIRecordTransaction']
             data
             continue    
