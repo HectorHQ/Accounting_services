@@ -91,6 +91,8 @@ def create_payment(list_pmts,headers):
         
         id_retailer = pmt['Retailer_ID']
         interComp = pmt['Intercompany']
+        if interComp == "None":
+            interComp = ""
         payment_ref = pmt['Pmt_Ref']
         utc_str = 'T12:00:00.000Z'
         paidAt = pmt['Payment_Date'] + utc_str
@@ -107,8 +109,7 @@ def create_payment(list_pmts,headers):
                 location = None
             elif str.upper(pmt['Location']) == 'WL':
                 location = 'CASH_IN_WOODLAKE'
-            elif interComp == "None":
-                interComp = ""
+            
             else:
                 location = 'CASH_IN_' + str.upper(pmt['Location'])
         
