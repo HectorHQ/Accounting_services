@@ -113,6 +113,7 @@ def create_payment(list_pmts,headers):
         elif transactionType == 'SELF_COLLECTED' or str(transactionType).startswith('WRITE'):
             pmt_method = None
             location = None
+            interComp = None
 
         try:
             data_pmt_tid = get_pmt_transaction_number(headers, pmt)
@@ -139,7 +140,7 @@ def create_payment(list_pmts,headers):
             response = requests.post('https://api.nabis.com/graphql/admin', headers=headers, json=json_data)
 
             data_pmt_created = response.json()
-
+            
             data = data_pmt_created['data']['postAccountingAPIRecordTransaction']
             data
             continue    
