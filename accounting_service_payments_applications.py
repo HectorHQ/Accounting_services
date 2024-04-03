@@ -92,7 +92,7 @@ def create_payment(list_pmts,headers):
         id_retailer = pmt['Retailer_ID']
         interComp = pmt['Intercompany']
         if interComp == "None":
-            interComp = ""
+            interComp = "N/A"
         payment_ref = pmt['Pmt_Ref']
         utc_str = 'T12:00:00.000Z'
         paidAt = pmt['Payment_Date'] + utc_str
