@@ -231,10 +231,8 @@ if __name__ == "__main__":
             list_invoices = []
             for i in invoices_df['Invoices']:
                 item = int(i)
-                item
                 try:    
                     data = search_invoices(item,headers)
-                    data
                     list_invoices.append(data)
                 except:
                     continue
