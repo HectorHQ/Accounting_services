@@ -80,6 +80,7 @@ def application_of_payments(df_invs,headers):
     for i in df_invs:
         try:
             data_pmt_tid = get_pmt_transaction_number(headers, i)
+            data_pmt_tid
         except:
             i['pmt_tid'] = 'Payment Not Found'
             continue    
@@ -96,6 +97,7 @@ def application_of_payments(df_invs,headers):
         appliedAt = pmt_item['Applied_At'] + utc_str
         try:
             data_inv_num = search_invoices(pmt_item['Invoice_number'],headers)
+            data_inv_num
         except:
             st.write(f'order: {pmt_item["Invoice_number"]} not found')    
         invs_nabis = data_inv_num['data']['getAccountingAPIDetailedInvoicesByNumber']['matchingOrderNumber']
