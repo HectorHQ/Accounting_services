@@ -143,7 +143,7 @@ def create_payment(list_pmts,headers):
             response = requests.post('https://api.nabis.com/graphql/admin', headers=headers, json=json_data)
 
             data_pmt_created = response.json()
-            st.write(data_pmt_created)
+            #st.write(data_pmt_created)
             data = data_pmt_created['data']['postAccountingAPIRecordTransaction']
             
             continue    
