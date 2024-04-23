@@ -118,6 +118,11 @@ def create_payment(list_pmts,headers):
             location = None
             interComp = None
 
+        if str(payment_ref).endswith('-RG'):
+            anticipated_paid_to = ['TWluaW1hbE9yZ2FuaXphdGlvbkJhbmtpbmc6ZjVhOWE0ZDEtNDdmMC00MTQxLTlhYjktYjBiYjEzNzZmNDVj']
+        else:
+            anticipated_paid_to = [None]
+
         try:
             data_pmt_tid = get_pmt_transaction_number(headers, pmt)
         except:
@@ -134,7 +139,8 @@ def create_payment(list_pmts,headers):
                         'location': location,
                         'adminNotes': notes,
                         'publicNotes': '',
-                        'originCompany': interComp
+                        'originCompany': interComp,
+                        'earmarkedOrganizationIds': anticipated_paid_to
                     },
                 },
                 'query': 'mutation postAccountingAPIRecordTransaction($input: PostAccountingAPIRecordTransactionInput!) {\n  postAccountingAPIRecordTransaction(input: $input) {\n    amount\n    id\n    name\n    number\n    __typename\n  }\n}\n',
