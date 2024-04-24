@@ -118,8 +118,8 @@ def create_payment(list_pmts,headers):
             location = None
             interComp = None
 
-        if str(payment_ref).endswith('-RG'):
-            anticipated_paid_to = ['TWluaW1hbE9yZ2FuaXphdGlvbkJhbmtpbmc6ZjVhOWE0ZDEtNDdmMC00MTQxLTlhYjktYjBiYjEzNzZmNDVj']
+        if str(payment_ref).contains('-RG'):
+            anticipated_paid_to = ['TWluaW1hbE9yZ2FuaXphdGlvbkJhbmtpbmc6ZjVhOWE0ZDEtNDdmMC00MTQxLTlhYjktYjBiYjEzNzZmNDVj',]
         else:
             anticipated_paid_to = [None]
 
@@ -139,17 +139,17 @@ def create_payment(list_pmts,headers):
                         'location': location,
                         'adminNotes': notes,
                         'publicNotes': '',
+                        'earmarkedOrganizationIds': anticipated_paid_to,
                         'originCompany': interComp,
-                        'earmarkedOrganizationIds': anticipated_paid_to
                     },
                 },
                 'query': 'mutation postAccountingAPIRecordTransaction($input: PostAccountingAPIRecordTransactionInput!) {\n  postAccountingAPIRecordTransaction(input: $input) {\n    amount\n    id\n    name\n    number\n    __typename\n  }\n}\n',
             }
 
             response = requests.post('https://api.nabis.com/graphql/admin', headers=headers, json=json_data)
-
+            
             data_pmt_created = response.json()
-            #st.write(data_pmt_created)
+            st.write(data_pmt_created)
             data = data_pmt_created['data']['postAccountingAPIRecordTransaction']
             
             continue    
