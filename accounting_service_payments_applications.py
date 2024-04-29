@@ -118,7 +118,7 @@ def create_payment(list_pmts,headers):
             location = None
             interComp = None
 
-        if str(payment_ref).contains('-RG'):
+        if payment_ref.str.contains('-RG'):
             anticipated_paid_to = ['TWluaW1hbE9yZ2FuaXphdGlvbkJhbmtpbmc6ZjVhOWE0ZDEtNDdmMC00MTQxLTlhYjktYjBiYjEzNzZmNDVj',]
         else:
             anticipated_paid_to = [None]
