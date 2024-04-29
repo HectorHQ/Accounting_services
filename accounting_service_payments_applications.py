@@ -121,7 +121,7 @@ def create_payment(list_pmts,headers):
         if payment_ref.endswith('-RG'):
             anticipated_paid_to = ['TWluaW1hbE9yZ2FuaXphdGlvbkJhbmtpbmc6ZjVhOWE0ZDEtNDdmMC00MTQxLTlhYjktYjBiYjEzNzZmNDVj',]
         else:
-            anticipated_paid_to = [None]
+            anticipated_paid_to = []
 
         try:
             data_pmt_tid = get_pmt_transaction_number(headers, pmt)
