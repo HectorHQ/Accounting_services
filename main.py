@@ -80,7 +80,7 @@ def application_of_payments(df_invs,headers):
     for i in df_invs:
         try:
             data_pmt_tid = get_pmt_transaction_number(headers, i)
-            data_pmt_tid
+            
         except Exception as e:
             st.write(e)
             i['pmt_tid'] = 'Payment Not Found'
