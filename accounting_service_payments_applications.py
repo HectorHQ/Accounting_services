@@ -290,21 +290,10 @@ def filter_dataframe(df: pd.DataFrame,key) -> pd.DataFrame:
         modification_container = st.container()
 
         with modification_container:
-                to_filter_columns = st.multiselect("Filter dataframe on", ['Date','Pmt_Method'])
-                for column in to_filter_columns:
-                    left, right = st.columns((1, 20))
-                    # Treat columns with < 10 unique values as categorical
-                    if is_categorical_dtype(df[column]) or df[column].nunique() < 10:
-                        user_cat_input = right.multiselect(
-                            f"Values for {column}",
-                            df[column].unique(),
-                            default=list(df[column].unique()),
-                        )
-                        df = df[df[column].isin(user_cat_input)]
-                    
-                    elif is_datetime64_any_dtype(df[column]):
+                
+                if is_datetime64_any_dtype(df[Date]):
                         user_date_input = st.date_input(
-                            f"Values for {column}",
+                            f"Values for Date",
                             value=(
                                 df['Date'].max() - pd.Timedelta(days=1),
                                 df['Date'].max() - pd.Timedelta(days=1),
@@ -315,18 +304,13 @@ def filter_dataframe(df: pd.DataFrame,key) -> pd.DataFrame:
                             start_date, end_date = user_date_input
                             df = df.loc[df[column].between(start_date, end_date)]
                     
-            #if is_datetime64_any_dtype(df['Date']):
-             #       user_date_input = st.date_input(
-              #          f"Values",
-               #         value=(
-                #            df['Date'].max() - pd.Timedelta(days=1),
-                 #           df['Date'].max() - pd.Timedelta(days=1),
-                  #      ),
-                   # )
-                    #if len(user_date_input) == 2:
-                     #   user_date_input = tuple(map(pd.to_datetime, user_date_input))
-                      #  start_date, end_date = user_date_input
-                       # df = df.loc[df['Date'].between(start_date, end_date)]
+                modify = st.checkbox("Add filters",value=False,key=key)
+
+                if not modify:
+                    return df
+                else:
+                    select_pmt_method = st.multiselect("Select Payment Method", df['Pmt_Method'].unique(), default = list(df['Pmt_Method'].unique()))
+                    df = df[df[Pmt_Method].isin(select_pmt_method)]
             
         return df
 
