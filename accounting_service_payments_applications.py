@@ -291,7 +291,7 @@ def filter_dataframe(df: pd.DataFrame,key) -> pd.DataFrame:
 
         with modification_container:
                 
-                if is_datetime64_any_dtype(df[Date]):
+                if is_datetime64_any_dtype(df['Date']):
                         user_date_input = st.date_input(
                             f"Values for Date",
                             value=(
@@ -310,7 +310,7 @@ def filter_dataframe(df: pd.DataFrame,key) -> pd.DataFrame:
                     return df
                 else:
                     select_pmt_method = st.multiselect("Select Payment Method", df['Pmt_Method'].unique(), default = list(df['Pmt_Method'].unique()))
-                    df = df[df[Pmt_Method].isin(select_pmt_method)]
+                    df = df[df['Pmt_Method'].isin(select_pmt_method)]
             
         return df
 
