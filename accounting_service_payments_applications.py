@@ -302,7 +302,7 @@ def filter_dataframe(df: pd.DataFrame,key) -> pd.DataFrame:
                         if len(user_date_input) == 2:
                             user_date_input = tuple(map(pd.to_datetime, user_date_input))
                             start_date, end_date = user_date_input
-                            df = df.loc[df[column].between(start_date, end_date)]
+                            df = df.loc[df['Date'].between(start_date, end_date)]
                     
                 modify = st.checkbox("Add filters",value=False,key=key)
 
