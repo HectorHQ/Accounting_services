@@ -274,13 +274,7 @@ def filter_dataframe(df: pd.DataFrame,key) -> pd.DataFrame:
             pd.DataFrame: Filtered dataframe
         """
 
-        modify = st.checkbox("Add filters",value=True,key=key)
-
-        if not modify:
-            return df
-
-    
-        df = df.copy()
+       df = df.copy()
         
         # Try to convert datetimes into a standard format (datetime, no timezone)
         for col in df.columns:
@@ -296,7 +290,7 @@ def filter_dataframe(df: pd.DataFrame,key) -> pd.DataFrame:
         modification_container = st.container()
 
         with modification_container:
-                to_filter_columns = st.multiselect("Filter dataframe on", df.columns)
+                to_filter_columns = st.multiselect("Filter dataframe on", ['Date','Pmt_Method'])
                 for column in to_filter_columns:
                     left, right = st.columns((1, 20))
                     # Treat columns with < 10 unique values as categorical
@@ -307,21 +301,10 @@ def filter_dataframe(df: pd.DataFrame,key) -> pd.DataFrame:
                             default=list(df[column].unique()),
                         )
                         df = df[df[column].isin(user_cat_input)]
-                    elif is_numeric_dtype(df[column]):
-                        _min = float(df[column].min())
-                        _max = float(df[column].max())
-                        step = (_max - _min) / 100
-                        user_num_input = right.slider(
-                            f"Values for {column}",
-                            min_value=_min,
-                            max_value=_max,
-                            value=(_min, _max),
-                            step=step,
-                        )
-                        df = df[df[column].between(*user_num_input)]
+                    
                     elif is_datetime64_any_dtype(df[column]):
                         user_date_input = st.date_input(
-                            f"Values",
+                            f"Values for {column}",
                             value=(
                                 df['Date'].max() - pd.Timedelta(days=1),
                                 df['Date'].max() - pd.Timedelta(days=1),
@@ -331,12 +314,6 @@ def filter_dataframe(df: pd.DataFrame,key) -> pd.DataFrame:
                             user_date_input = tuple(map(pd.to_datetime, user_date_input))
                             start_date, end_date = user_date_input
                             df = df.loc[df[column].between(start_date, end_date)]
-                    else:
-                        user_text_input = right.text_input(
-                            f"Write {column} Name",key= f'{key}_text_widget'
-                        )
-                        if user_text_input:
-                            df = df[df[column].astype(str).str.contains(user_text_input)]      
                     
             #if is_datetime64_any_dtype(df['Date']):
              #       user_date_input = st.date_input(
