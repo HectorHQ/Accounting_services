@@ -274,7 +274,7 @@ def filter_dataframe(df: pd.DataFrame,key) -> pd.DataFrame:
             pd.DataFrame: Filtered dataframe
         """
 
-       df = df.copy()
+        df = df.copy()
         
         # Try to convert datetimes into a standard format (datetime, no timezone)
         for col in df.columns:
