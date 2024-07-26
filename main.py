@@ -43,18 +43,20 @@ st.cache_data()
 cashlog_complete,cashlog = df_cash()
 st.session_state['cashlog_complete'] = cashlog_complete
 st.session_state['cashlog'] = cashlog
+cashlog
 
 st.cache_data()
 checklog_complete,checklog = df_checks()
 st.session_state['checklog_complete'] = checklog_complete
 st.session_state['checklog'] = checklog
+checklog
 
 
 st.cache_data()
 eftlog_complete,eftlog = df_eft()
 st.session_state['eftlog_complete'] = eftlog_complete
 st.session_state['eftlog'] = eftlog
-
+eftlog
 
 st.cache_data()
 logs_concatenated_filter = logs_consolidated(cashlog,checklog,eftlog)
