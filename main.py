@@ -73,6 +73,15 @@ def payments_creation_as(list_payments,headers):
     st.success(f'Payments Processed, Execution time: {create_pmt_execution_time} seconds' , icon="✅")
 
 
+def remove_decimal(val):
+    if pd.isnull(val) or val == '':
+        return val
+    val_str = str(val)
+    if val_str.endswith('.0'):
+        return val_str[:-2]
+    return val_str
+
+
 st.cache_data()
 def application_of_payments(df_invs,headers):
     start_time = time.perf_counter()
@@ -340,7 +349,7 @@ if __name__ == "__main__":
             invoices_list = df_data_pmts.loc[df_data_pmts['Type']=='Invoice'].copy()
             num_of_invs = invoices_list.shape
             st.write(f'Total Number of Invoices to process is: {num_of_invs[0]}')
-            invoices_list['Invoice_number'] = invoices_list['Invoice_number'].astype(int)
+            invoices_list['Invoice_number'] = invoices_list['Invoice_number'].lambda(apply(remove_decimal(x)))
             invoices_list['Applied_At'] = invoices_list['Applied_At'].astype(str)
             df_invs_json = invoices_list.to_json(orient='records')
             df_invs_json = json.loads(df_invs_json)
