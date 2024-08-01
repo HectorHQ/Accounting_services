@@ -350,7 +350,7 @@ if __name__ == "__main__":
             invoices_list = df_data_pmts.loc[df_data_pmts['Type']=='Invoice'].copy()
             num_of_invs = invoices_list.shape
             st.write(f'Total Number of Invoices to process is: {num_of_invs[0]}')
-            invoices_list['Invoice_number'] = invoices_list['Invoice_number'].apply(lambda x: remove_decimal(x))
+            invoices_list['Invoice_number'] = invoices_list['Invoice_number'].astype(int)
             invoices_list['Applied_At'] = invoices_list['Applied_At'].astype(str)
             df_invs_json = invoices_list.to_json(orient='records')
             df_invs_json = json.loads(df_invs_json)
