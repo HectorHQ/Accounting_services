@@ -108,6 +108,7 @@ def application_of_payments(df_invs,headers):
         appliedAt = pmt_item['Applied_At'] + utc_str
         try:
             data_inv_num = search_invoices(pmt_item['Invoice_number'],headers)
+            data_inv_num
         except Exception as e:
             st.write(e)
             st.write(f'order: {pmt_item["Invoice_number"]} not found')    
